@@ -10,10 +10,11 @@ import { runPlinko } from "../../../../../lib/plinkoEngine";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { clientSeed, betCents, dropColumn } = await request.json();
+    const { id } = await params;
 
     if (!clientSeed || betCents === undefined || dropColumn === undefined) {
       return NextResponse.json(
@@ -23,7 +24,7 @@ export async function POST(
     }
 
     const round = await prisma.round.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!round) {
@@ -57,7 +58,7 @@ export async function POST(
     const pegMapHash = sha256(JSON.stringify(pegMap));
 
     const updatedRound = await prisma.round.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         status: "STARTED",
         clientSeed,
