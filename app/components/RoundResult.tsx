@@ -2,6 +2,37 @@
 
 import React from "react";
 
+type Props = {
+  binIndex: number;
+  pegMapHash: string;
+  path: ("L" | "R")[];
+};
+
+export default function RoundResult({ binIndex, pegMapHash, path }: Props) {
+  return (
+    <div className="p-4 bg-white rounded-xl shadow">
+      <h3 className="text-sm font-medium text-zinc-700">Round Result</h3>
+
+      <div className="mt-3 text-sm text-zinc-600 space-y-2">
+        <div>
+          <strong>Bin:</strong> <span className="ml-2">{binIndex}</span>
+        </div>
+        <div>
+          <strong>Peg Map Hash:</strong>
+          <div className="mt-1 break-words text-xs text-zinc-500">{pegMapHash}</div>
+        </div>
+        <div>
+          <strong>Path:</strong>
+          <div className="mt-1 text-xs text-zinc-500">{path.join("")}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+"use client";
+
+import React from "react";
+
 interface RoundResultProps {
   binIndex: number;
   pegMapHash: string;

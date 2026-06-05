@@ -59,7 +59,9 @@ export default function Home() {
       <div className="max-w-4xl mx-auto">
         <header className="mb-6 flex items-center justify-between">
           <h1 className="text-3xl font-bold">Provably Fair Plinko Lab</h1>
-          <div className="text-sm text-zinc-500">Client-side demo</div>
+          <nav className="text-sm text-zinc-500">
+            <a href="/verify" className="underline">Verify</a>
+          </nav>
         </header>
 
         <section className="grid grid-cols-1 gap-6 lg:grid-cols-3">
