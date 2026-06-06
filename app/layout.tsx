@@ -14,8 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Provably Fair Plinko Lab",
-  description:
-    "Deterministic, verifiable, fair Plinko gameplay with cryptographic fairness verification.",
+  description: "Deterministic, verifiable, fair Plinko gameplay with cryptographic fairness verification.",
   keywords: ["plinko", "provably fair", "game", "casino", "crypto"],
   authors: [{ name: "Plinko Lab" }],
   openGraph: {
@@ -35,7 +34,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#090a0f]">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-[#04050a]">
         {children}
       </body>
     </html>
