@@ -11,7 +11,11 @@ import { runPlinko } from "../../../../../lib/plinkoEngine";
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
+
+  
 ) {
+
+  console.log("START ROUTE HIT");
   try {
     const { clientSeed, betCents, dropColumn } = await request.json();
     const { id } = await params;
