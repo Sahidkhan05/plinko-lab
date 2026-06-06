@@ -70,191 +70,122 @@ export default function Home() {
       setLoading(false);
     }
   }
-
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-6rem] top-24 h-72 w-72 rounded-full bg-cyan-500/15 blur-3xl" />
-        <div className="absolute right-[-4rem] top-64 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl" />
-        <div className="absolute bottom-[-8rem] left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-sky-400/10 blur-3xl" />
-      </div>
-
-      <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <div>
-            <div className="text-lg font-semibold tracking-[0.22em] text-white/90 uppercase">
+    <div className="min-h-screen text-slate-100 flex flex-col bg-[#090a0f]">
+      {/* Premiumsticky header */}
+      <header className="sticky top-0 z-50 border-b border-[#1e2230] bg-[#0c0d14]/90 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+          <div className="flex flex-col">
+            <span className="text-lg font-bold tracking-[0.2em] text-white uppercase">
               Plinko Lab
-            </div>
-            <div className="text-xs text-slate-400">
-              Provably fair experimentation
-            </div>
+            </span>
+            <span className="text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+              Provably Fair Dashboard
+            </span>
           </div>
           <Link
             href="/verify"
-            className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-white/5 px-4 py-2 text-sm font-medium text-cyan-200 shadow-lg shadow-cyan-950/20 transition hover:border-cyan-300/50 hover:bg-white/10 hover:text-white"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#272d40] bg-[#12141c] hover:bg-[#1b1f2b] px-4 py-2.5 text-xs font-semibold text-cyan-400 transition"
           >
             <Sparkles className="h-4 w-4" />
             Verify Round
           </Link>
         </div>
-      </nav>
+      </header>
 
-      <section className="px-4 pb-10 pt-14 sm:px-6 sm:pt-16 lg:px-8 lg:pt-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-[0.28em] text-cyan-200 backdrop-blur-xl">
-            <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
-            Fairness you can inspect
-          </div>
-          <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            <span className="bg-gradient-to-r from-cyan-200 via-sky-300 to-fuchsia-300 bg-clip-text text-transparent">
-              Modern Plinko
-            </span>
-            <br />
-            <span className="text-white/95">with a sharper interface</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
-            Deterministic, verifiable, and designed to feel clean on every
-            screen size.
-          </p>
-        </div>
-      </section>
-
-      <div className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <section className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
-          <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-6 lg:col-span-2">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10">
-                <HelpCircle className="h-5 w-5 text-cyan-200" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-white">
-                  How It Works
-                </h2>
-                <p className="text-sm text-slate-400">
-                  Start with your inputs, then follow the generated path to the
-                  final bin.
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {steps.map((step, index) => (
-                <div
-                  key={step}
-                  className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/35 p-3"
-                >
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cyan-400/15 text-sm font-semibold text-cyan-100">
-                    {index + 1}
-                  </span>
-                  <span className="text-sm font-medium text-slate-200">
-                    {step}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-black/20 backdrop-blur-2xl sm:p-6">
-            <h2 className="text-lg font-semibold text-white">
-              How Verification Works
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              After a round, use the revealed server seed with your client seed,
-              nonce, and drop column. Matching inputs recreate the same path and
-              winning bin, so the result can be checked independently.
+      <main className="flex-1 mx-auto max-w-7xl w-full px-6 py-8 space-y-8">
+        {/* Intro Hero with stepper */}
+        <section className="premium-card p-6 flex flex-col gap-6 md:flex-row md:items-center justify-between">
+          <div className="max-w-md">
+            <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Modern Plinko Lab
+            </h1>
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Verify every drop instantly. Our system uses cryptographic seed hashing to guarantee 100% fair outcomes.
             </p>
+          </div>
+
+          {/* Stepper Flow */}
+          <div className="flex flex-wrap gap-2 md:gap-3">
+            {steps.map((step, index) => (
+              <div
+                key={step}
+                className="flex items-center gap-2 bg-[#0d0f17] border border-[#1e2230] rounded-xl px-3.5 py-2 text-xs text-slate-300"
+              >
+                <span className="font-bold text-cyan-400 text-xs">{index + 1}</span>
+                <span className="font-medium text-slate-400">{step}</span>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+        {/* Dashboard Grid */}
+        <section className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Plinko board - takes up 2 cols on large screens */}
           <div className="lg:col-span-2">
             <PlinkoBoard rows={12} bins={13} path={result?.path ?? []} />
           </div>
 
-          <aside className="space-y-4">
-            <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-slate-950/30 backdrop-blur-2xl sm:p-6">
-              <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-white">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-cyan-400/15 text-xs text-cyan-100">
-                  1
-                </span>
-                Input
-                <ArrowRight className="h-4 w-4 text-slate-500" />
-                Path
-                <ArrowRight className="h-4 w-4 text-slate-500" />
-                Bin
-                <ArrowRight className="h-4 w-4 text-slate-500" />
-                Verify
+          {/* Configuration & Controls */}
+          <div className="space-y-6">
+            <div className="premium-card p-6 space-y-6">
+              <h2 className="text-base font-bold text-white tracking-wide border-b border-[#1e2230] pb-3">
+                Drop Configuration
+              </h2>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="premium-label">Client Seed</label>
+                  <input
+                    className="premium-input"
+                    value={clientSeed}
+                    onChange={(e) => setClientSeed(e.target.value)}
+                    placeholder="Enter seed..."
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                    Used to generate deterministic drop paths. Save it to verify fairness later.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="premium-label">Bet Amount (USD)</label>
+                  <input
+                    type="number"
+                    className="premium-input"
+                    value={betAmount}
+                    min={0}
+                    step={0.01}
+                    onChange={(e) => setBetAmount(Number(e.target.value))}
+                    placeholder="1.00"
+                  />
+                </div>
+
+                <div>
+                  <label className="premium-label">Drop Column</label>
+                  <input
+                    type="number"
+                    className="premium-input"
+                    value={dropColumn}
+                    min={0}
+                    max={12}
+                    onChange={(e) => setDropColumn(Number(e.target.value))}
+                    placeholder="6"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                    Starting slot (0 to 12) from left to right.
+                  </p>
+                </div>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
-                Create the drop, read the path, check the winning bin, then
-                verify the round with the same inputs.
-              </p>
-            </div>
 
-            <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-slate-950/30 backdrop-blur-2xl sm:p-6">
-              <label className="mb-3 block text-sm font-medium text-cyan-200">
-                Client Seed
-              </label>
-              <p className="mb-3 text-xs leading-5 text-slate-400">
-                Your seed is part of the fairness input. Save it if you want to
-                verify this exact drop later.
-              </p>
-              <input
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/25"
-                value={clientSeed}
-                onChange={(e) => setClientSeed(e.target.value)}
-                placeholder="Enter seed..."
-              />
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-slate-950/30 backdrop-blur-2xl sm:p-6">
-              <label className="mb-3 block text-sm font-medium text-cyan-200">
-                Bet Amount (USD)
-              </label>
-              <input
-                type="number"
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/25"
-                value={betAmount}
-                min={0}
-                step={0.01}
-                onChange={(e) => setBetAmount(Number(e.target.value))}
-                placeholder="0.00"
-              />
-            </div>
-
-            <div className="rounded-3xl border border-white/10 bg-white/7 p-5 shadow-2xl shadow-slate-950/30 backdrop-blur-2xl sm:p-6">
-              <label className="mb-3 block text-sm font-medium text-cyan-200">
-                Drop Column
-              </label>
-              <p className="mb-3 text-xs leading-5 text-slate-400">
-                Choose the starting column for the ball. This board accepts
-                columns 0 through 12.
-              </p>
-              <input
-                type="number"
-                className="w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-fuchsia-300/60 focus:ring-2 focus:ring-fuchsia-400/25"
-                value={dropColumn}
-                min={0}
-                max={12}
-                onChange={(e) => setDropColumn(Number(e.target.value))}
-                placeholder="0-12"
-              />
-            </div>
-
-            <button
-              onClick={handleDrop}
-              disabled={loading}
-              className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl px-6 py-4 text-base font-semibold text-white shadow-2xl shadow-cyan-950/30 transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-sky-500 to-fuchsia-500" />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.25),_transparent_45%)] opacity-80" />
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <div className="shimmer absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-              </div>
-              <span className="relative inline-flex items-center gap-2">
+              <button
+                onClick={handleDrop}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 h-12 text-sm font-bold text-white shadow-lg shadow-cyan-500/10 transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              >
                 {loading ? (
                   <>
                     <Loader2 className="h-5 w-5 animate-spin" />
-                    Dropping...
+                    Dropping Ball...
                   </>
                 ) : (
                   <>
@@ -262,8 +193,8 @@ export default function Home() {
                     Drop Ball
                   </>
                 )}
-              </span>
-            </button>
+              </button>
+            </div>
 
             {result && (
               <RoundResult
@@ -272,9 +203,9 @@ export default function Home() {
                 path={result.path}
               />
             )}
-          </aside>
+          </div>
         </section>
-      </div>
+      </main>
     </div>
   );
 }

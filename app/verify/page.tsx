@@ -80,47 +80,39 @@ export default function VerifyPage() {
   };
 
   return (
-    <main className="min-h-screen px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
-      <div className="mx-auto max-w-2xl">
-        <div className="mb-6 flex items-center">
+    <main className="min-h-screen px-6 py-10 lg:py-16 text-slate-100 flex flex-col bg-[#090a0f]">
+      <div className="mx-auto max-w-2xl w-full flex-1 flex flex-col justify-center space-y-6">
+        <div className="flex items-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 backdrop-blur-xl transition hover:border-cyan-400/30 hover:bg-white/10 hover:text-white"
+            className="group inline-flex items-center gap-2 rounded-xl border border-[#272d40] bg-[#12141c] hover:bg-[#1b1f2b] px-4 py-2.5 text-xs font-semibold text-slate-300 transition"
           >
-            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
             <span>Back to Home</span>
           </Link>
         </div>
 
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/7 p-5 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-8">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.14),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(168,85,247,0.12),_transparent_30%)]" />
-
+        <div className="premium-card p-6 md:p-10 relative overflow-hidden">
           <div className="relative z-10">
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+            <h1 className="text-2xl font-bold tracking-wide text-white">
               Verify Round
             </h1>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">
-              Enter the round inputs to confirm the fairness and result of a
-              Plinko drop.
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Confirm the cryptographic fairness and deterministic path generation of any Plinko drop.
             </p>
 
-            <div className="mt-6 rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-              <h2 className="text-sm font-semibold text-white">
+            <div className="mt-6 rounded-xl border border-[#1e2230] bg-[#0d0f17] p-4">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
                 How Verification Works
               </h2>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
-                Verification reruns the same deterministic calculation using
-                the server seed, client seed, nonce, and drop column. If the
-                inputs match, the path and winning bin match too.
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Verification reruns the same calculation using the server seed, client seed, nonce, and drop column. Matching inputs always yield the identical path and winning bin.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
               <div>
-                <label
-                  htmlFor="serverSeed"
-                  className="mb-2 block text-sm font-medium text-cyan-200"
-                >
+                <label htmlFor="serverSeed" className="premium-label">
                   Server Seed
                 </label>
                 <input
@@ -129,40 +121,33 @@ export default function VerifyPage() {
                   type="text"
                   value={formData.serverSeed}
                   onChange={handleInputChange}
-                  placeholder="Enter server seed"
+                  placeholder="Enter server seed..."
                   required
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/25"
+                  className="premium-input"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="clientSeed"
-                  className="mb-2 block text-sm font-medium text-cyan-200"
-                >
+                <label htmlFor="clientSeed" className="premium-label">
                   Client Seed
                 </label>
-                <p className="mb-2 text-xs leading-5 text-slate-400">
-                  This should be the same client seed used when the round was
-                  played.
-                </p>
                 <input
                   id="clientSeed"
                   name="clientSeed"
                   type="text"
                   value={formData.clientSeed}
                   onChange={handleInputChange}
-                  placeholder="Enter client seed"
+                  placeholder="Enter client seed..."
                   required
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/25"
+                  className="premium-input"
                 />
+                <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                  This must match the client seed supplied when playing the round.
+                </p>
               </div>
 
               <div>
-                <label
-                  htmlFor="nonce"
-                  className="mb-2 block text-sm font-medium text-cyan-200"
-                >
+                <label htmlFor="nonce" className="premium-label">
                   Nonce
                 </label>
                 <input
@@ -171,22 +156,16 @@ export default function VerifyPage() {
                   type="text"
                   value={formData.nonce}
                   onChange={handleInputChange}
-                  placeholder="Enter nonce"
+                  placeholder="Enter nonce..."
                   required
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-cyan-300/60 focus:ring-2 focus:ring-cyan-400/25"
+                  className="premium-input"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="dropColumn"
-                  className="mb-2 block text-sm font-medium text-cyan-200"
-                >
+                <label htmlFor="dropColumn" className="premium-label">
                   Drop Column
                 </label>
-                <p className="mb-2 text-xs leading-5 text-slate-400">
-                  Enter the original starting column for the drop.
-                </p>
                 <input
                   id="dropColumn"
                   name="dropColumn"
@@ -195,108 +174,94 @@ export default function VerifyPage() {
                   value={formData.dropColumn}
                   onChange={handleInputChange}
                   placeholder="0"
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-3 text-white placeholder:text-slate-500 shadow-inner shadow-black/20 outline-none transition focus:border-fuchsia-300/60 focus:ring-2 focus:ring-fuchsia-400/25"
+                  className="premium-input"
                 />
+                <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+                  Starting drop column index (0 to 12).
+                </p>
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative flex w-full items-center justify-center overflow-hidden rounded-2xl px-6 py-4 text-base font-semibold text-white shadow-2xl shadow-cyan-950/30 transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 h-12 text-sm font-bold text-white shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-sky-500 to-fuchsia-500" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.22),_transparent_45%)] opacity-80" />
-                <span className="relative inline-flex items-center gap-2">
-                  {loading ? (
-                    <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      Verifying...
-                    </>
-                  ) : (
-                    <span>Verify Round</span>
-                  )}
-                </span>
+                {loading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  <span>Verify Round</span>
+                )}
               </button>
             </form>
 
             {error && !loading && (
-              <div className="mt-6 rounded-2xl border border-red-400/20 bg-red-500/10 p-4">
-                <div className="flex gap-3">
-                  <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-red-300" />
-                  <div>
-                    <h3 className="font-semibold text-red-200">
-                      Verification Failed
-                    </h3>
-                    <p className="text-sm text-red-100/80">{error}</p>
-                  </div>
+              <div className="mt-6 rounded-xl border border-red-500/20 bg-red-500/5 p-4 flex gap-3">
+                <AlertCircle className="h-5 w-5 flex-shrink-0 text-red-500 mt-0.5" />
+                <div>
+                  <h3 className="font-bold text-red-400 text-sm">
+                    Verification Failed
+                  </h3>
+                  <p className="text-xs text-red-400/80 mt-1 leading-relaxed">{error}</p>
                 </div>
               </div>
             )}
 
             {response && submitted && !loading && (
-              <div className="mt-6 space-y-4">
-                <div className="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4">
-                  <div className="flex gap-3">
-                    <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-300" />
-                    <div>
-                      <h3 className="font-semibold text-emerald-100">
-                        Verification Successful
-                      </h3>
-                      <p className="text-sm text-emerald-50/80">
-                        Round parameters verified successfully.
-                      </p>
-                    </div>
+              <div className="mt-8 space-y-6 border-t border-[#1e2230] pt-6">
+                <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 flex gap-3">
+                  <CheckCircle className="h-5 w-5 flex-shrink-0 text-emerald-500 mt-0.5" />
+                  <div>
+                    <h3 className="font-bold text-emerald-400 text-sm">
+                      Verification Successful
+                    </h3>
+                    <p className="text-xs text-emerald-400/80 mt-1 leading-relaxed">
+                      Round parameters verified and cryptographically proven.
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-                    <p className="mb-2 text-sm font-medium text-slate-400">
+                  <div className="rounded-xl bg-[#0d0f17] border border-[#1e2230] p-4">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
                       Commit Hex
                     </p>
-                    <p className="break-all font-mono text-sm text-white/90">
+                    <p className="break-all font-mono text-xs text-cyan-400 font-semibold bg-[#12141c] border border-[#1e2230] p-3 rounded-lg select-all">
                       {response.commitHex}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-                    <p className="mb-2 text-sm font-medium text-slate-400">
+                  <div className="rounded-xl bg-[#0d0f17] border border-[#1e2230] p-4">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
                       Peg Map Hash
                     </p>
-                    <p className="mb-2 text-xs leading-5 text-slate-500">
-                      Identifies the peg layout used for this calculation.
-                    </p>
-                    <p className="break-all font-mono text-sm text-white/90">
+                    <p className="break-all font-mono text-xs text-cyan-400 font-semibold bg-[#12141c] border border-[#1e2230] p-3 rounded-lg select-all">
                       {response.pegMapHash}
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-                    <p className="mb-2 text-sm font-medium text-slate-400">
+                  <div className="rounded-xl bg-[#0d0f17] border border-[#1e2230] p-4">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
                       Bin Index
                     </p>
-                    <p className="mb-2 text-xs leading-5 text-slate-500">
-                      The final winning bin calculated from the path.
-                    </p>
-                    <p className="font-mono text-lg font-semibold text-white">
+                    <div className="text-2xl font-extrabold text-white bg-[#12141c] border border-[#1e2230] py-2.5 rounded-lg text-center select-all">
                       {response.binIndex}
-                    </p>
+                    </div>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-slate-950/35 p-4">
-                    <p className="mb-2 text-sm font-medium text-slate-400">
-                      Path
+                  <div className="rounded-xl bg-[#0d0f17] border border-[#1e2230] p-4">
+                    <p className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Path Output
                     </p>
-                    <p className="mb-2 text-xs leading-5 text-slate-500">
-                      The generated movement sequence for the ball.
-                    </p>
-                    <p className="break-all font-mono text-sm text-white/90">
-                      {response.path.join(" → ")}
+                    <p className="break-all font-mono text-xs text-cyan-400 font-semibold bg-[#12141c] border border-[#1e2230] p-3 rounded-lg select-all">
+                      {response.path.map((val) => (val === 0 ? "L" : "R")).join(" → ")}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row">
+                <div className="flex flex-col gap-4 border-t border-[#1e2230] pt-6 sm:flex-row">
                   <button
                     onClick={() => {
                       setFormData({
@@ -309,13 +274,13 @@ export default function VerifyPage() {
                       setError(null);
                       setSubmitted(false);
                     }}
-                    className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 font-medium text-white transition hover:bg-white/10"
+                    className="flex-1 rounded-xl border border-[#272d40] bg-[#12141c] hover:bg-[#1b1f2b] py-3 text-xs font-bold uppercase tracking-wider text-white transition cursor-pointer"
                   >
                     Verify Another
                   </button>
                   <Link
                     href="/"
-                    className="flex-1 rounded-2xl bg-gradient-to-r from-cyan-500 via-sky-500 to-fuchsia-500 px-4 py-3 text-center font-medium text-white shadow-lg shadow-cyan-950/30 transition hover:-translate-y-0.5"
+                    className="flex-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 py-3 text-center text-xs font-bold uppercase tracking-wider text-white shadow-lg transition"
                   >
                     Back to Home
                   </Link>

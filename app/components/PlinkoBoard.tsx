@@ -23,41 +23,39 @@ export default function PlinkoBoard({ rows, bins, path }: Props) {
 
   return (
     <div className="w-full">
-      <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/7 p-4 shadow-2xl shadow-black/30 backdrop-blur-2xl sm:p-6 lg:p-8">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.16),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(192,132,252,0.14),_transparent_30%)]" />
-        <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl" />
-
-        <div className="relative z-10 mb-5 flex flex-col gap-3 border-b border-white/10 pb-5 sm:flex-row sm:items-center sm:justify-between">
+      <div className="premium-card p-6 md:p-8 relative overflow-hidden">
+        <div className="relative z-10 mb-8 flex flex-col gap-4 border-b border-[#1e2230] pb-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-white">
+            <h2 className="text-xl font-bold tracking-tight text-white">
               Plinko Board
             </h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-xs font-bold uppercase tracking-wider text-slate-500">
               {rows} rows · {bins} bins
             </p>
           </div>
-          <div className="min-w-0 rounded-2xl border border-cyan-400/20 bg-slate-950/45 px-4 py-2 shadow-inner shadow-black/20 sm:max-w-md">
-            <p className="text-xs font-medium text-slate-400">Ball Path</p>
-            <p className="break-words font-mono text-sm text-cyan-100">
+          <div className="min-w-0 rounded-xl bg-[#0d0f17] border border-[#1e2230] px-4 py-2.5 sm:max-w-md">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Active Ball Path</p>
+            <p className="break-words font-mono text-xs text-cyan-400 font-semibold tracking-wide">
               {readablePath}
             </p>
           </div>
         </div>
 
-        <div className="relative z-10 mb-5 flex flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/35 p-3 text-sm text-slate-300">
-          <span className="font-medium text-white">Legend</span>
-          <span className="inline-flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_14px_rgba(34,211,238,0.75)]" />
+        {/* Legend */}
+        <div className="relative z-10 mb-8 flex flex-wrap items-center gap-4 rounded-xl bg-[#0d0f17] border border-[#1e2230] px-4 py-3 text-xs text-slate-400">
+          <span className="font-bold text-white uppercase tracking-wider text-[10px]">Legend</span>
+          <span className="inline-flex items-center gap-2 font-semibold">
+            <span className="h-2.5 w-2.5 rounded-full bg-cyan-400" />
             Left movement
           </span>
-          <span className="inline-flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.75)]" />
+          <span className="inline-flex items-center gap-2 font-semibold">
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
             Right movement
           </span>
         </div>
 
-        <div className="relative z-10 flex flex-col items-center gap-4 sm:gap-5">
+        {/* Peg Matrix */}
+        <div className="relative z-10 flex flex-col items-center gap-4 sm:gap-5 pb-4">
           {Array.from({ length: rows }).map((_, row) => (
             <div
               key={row}
@@ -74,10 +72,10 @@ export default function PlinkoBoard({ rows, bins, path }: Props) {
                 return (
                   <div key={peg} className="flex justify-center py-1">
                     <div
-                      className={`rounded-full ring-1 ring-inset transition-all duration-500 ${
+                      className={`rounded-full transition-all duration-300 ${
                         isPegInPath
-                          ? "h-4 w-4 bg-gradient-to-br from-amber-200 via-amber-400 to-orange-500 ring-amber-200/60 shadow-[0_0_18px_rgba(251,191,36,0.9)] sm:h-5 sm:w-5"
-                          : "h-3 w-3 bg-gradient-to-br from-slate-500 to-slate-700 ring-white/10 shadow-[0_0_12px_rgba(148,163,184,0.25)] sm:h-4 sm:w-4"
+                          ? "h-3.5 w-3.5 bg-gradient-to-br from-amber-400 to-orange-500 shadow-md sm:h-4 sm:w-4"
+                          : "h-3 w-3 bg-[#272d40] sm:h-3.5 sm:w-3.5"
                       }`}
                     />
                   </div>
@@ -93,11 +91,11 @@ export default function PlinkoBoard({ rows, bins, path }: Props) {
                   className="pointer-events-none flex justify-center"
                 >
                   <div
-                    className="relative -mt-6 animate-bounce sm:-mt-7"
+                    className="relative -mt-5 animate-bounce sm:-mt-6"
                     style={{ animationDuration: "1s" }}
                   >
-                    <div className="relative h-5 w-5 rounded-full bg-gradient-to-br from-cyan-200 via-cyan-400 to-blue-600 shadow-[0_0_20px_rgba(34,211,238,0.65)] ring-2 ring-cyan-100/40 sm:h-6 sm:w-6">
-                      <div className="absolute inset-1 rounded-full bg-white/30" />
+                    <div className="relative h-5 w-5 rounded-full bg-cyan-400 shadow-lg ring-2 ring-cyan-200/50 sm:h-5.5 sm:w-5.5">
+                      <div className="absolute inset-1 rounded-full bg-white/40" />
                     </div>
                   </div>
                 </div>
@@ -106,9 +104,10 @@ export default function PlinkoBoard({ rows, bins, path }: Props) {
           ))}
         </div>
 
-        <div className="relative z-10 mt-8 sm:mt-10">
+        {/* Bins */}
+        <div className="relative z-10 mt-8">
           <div
-            className="mx-auto grid max-w-3xl gap-2 sm:gap-2.5"
+            className="mx-auto grid max-w-3xl gap-1.5"
             style={{
               gridTemplateColumns: `repeat(${bins}, minmax(0, 1fr))`,
             }}
@@ -120,19 +119,19 @@ export default function PlinkoBoard({ rows, bins, path }: Props) {
               return (
                 <div key={index} className="flex min-w-0 flex-col items-center">
                   <div
-                    className={`flex w-full items-center justify-center rounded-t-xl px-1 py-2 text-xs font-semibold transition-all duration-500 sm:text-sm ${
+                    className={`flex w-full items-center justify-center rounded-t-lg px-1 py-2 text-xs font-bold transition-all duration-300 ${
                       isBallBin
-                        ? "bg-gradient-to-r from-cyan-500 via-sky-500 to-fuchsia-500 text-white shadow-[0_0_24px_rgba(56,189,248,0.45)]"
-                        : "border border-white/10 bg-white/5 text-slate-300"
+                        ? "bg-gradient-to-b from-cyan-500 to-blue-600 text-white shadow-md"
+                        : "border border-[#1e2230] bg-[#0d0f17] text-slate-400"
                     }`}
                   >
                     {index}
                   </div>
                   <div
-                    className={`h-10 w-full rounded-b-xl border border-t-0 border-white/10 transition-all duration-500 sm:h-12 ${
+                    className={`h-10 w-full rounded-b-lg border border-t-0 transition-all duration-300 ${
                       isBallBin
-                        ? "bg-gradient-to-b from-cyan-500/30 to-fuchsia-500/10 shadow-inner shadow-cyan-400/20"
-                        : "bg-[linear-gradient(180deg,rgba(15,23,42,0.85),rgba(2,6,23,0.92))]"
+                        ? "border-cyan-500/50 bg-[#06b6d4]/10 shadow-[inset_0_1px_6px_rgba(6,182,212,0.2)]"
+                        : "border-[#1e2230] bg-[#0d0f17]"
                     }`}
                   />
                 </div>
