@@ -34,6 +34,9 @@ export default function Home() {
     binIndex: number;
     pegMapHash: string;
     path: ("L" | "R")[];
+    roundId: string;
+    serverSeed: string;
+    nonce: string;
   } | null>(null);
   const [showResult, setShowResult] = useState(false);
 
@@ -45,7 +48,7 @@ export default function Home() {
     try {
       const commitRes = await fetch("/api/rounds/commit", { method: "POST" });
       if (!commitRes.ok) throw new Error("Commit failed");
-      const { roundId } = await commitRes.json();
+      const { roundId, nonce } = await commitRes.json();
 
       const startRes = await fetch(`/api/rounds/${roundId}/start`, {
         method: "POST",
@@ -63,10 +66,21 @@ export default function Home() {
       }
 
       const data = await startRes.json();
+
+      const revealRes = await fetch(`/api/rounds/${roundId}/reveal`, {
+        method: "POST",
+      });
+
+      if (!revealRes.ok) throw new Error("Reveal failed");
+      const { serverSeed } = await revealRes.json();
+
       setResult({
         binIndex: data.binIndex,
         pegMapHash: data.pegMapHash,
         path: data.path,
+        roundId,
+        serverSeed,
+        nonce,
       });
     } catch (e) {
       console.error(e);
@@ -265,6 +279,11 @@ export default function Home() {
                 binIndex={result.binIndex}
                 pegMapHash={result.pegMapHash}
                 path={result.path}
+                roundId={result.roundId}
+                serverSeed={result.serverSeed}
+                clientSeed={clientSeed}
+                nonce={result.nonce}
+                dropColumn={dropColumn}
               />
             )}
           </div>

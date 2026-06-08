@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   ArrowLeft,
   Loader2,
@@ -22,12 +23,38 @@ interface VerificationResponse {
 }
 
 export default function VerifyPage() {
+  const searchParams = useSearchParams();
+  
   const [formData, setFormData] = useState({
     serverSeed: "",
     clientSeed: "",
     nonce: "",
     dropColumn: 0,
   });
+
+  const [roundId, setRoundId] = useState<string | null>(null);
+
+  // Auto-fill form from query parameters
+  useEffect(() => {
+    const serverSeed = searchParams.get("serverSeed");
+    const clientSeed = searchParams.get("clientSeed");
+    const nonce = searchParams.get("nonce");
+    const dropColumn = searchParams.get("dropColumn");
+    const roundIdParam = searchParams.get("roundId");
+
+    if (serverSeed || clientSeed || nonce || dropColumn !== null) {
+      setFormData({
+        serverSeed: serverSeed || "",
+        clientSeed: clientSeed || "",
+        nonce: nonce || "",
+        dropColumn: dropColumn ? parseInt(dropColumn, 10) : 0,
+      });
+    }
+
+    if (roundIdParam) {
+      setRoundId(roundIdParam);
+    }
+  }, [searchParams]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -139,6 +166,38 @@ export default function VerifyPage() {
               Verification reruns the same calculation using your server seed, client seed, nonce, and drop column. Matching inputs always yield the identical path and winning bin — proving the game was fair.
             </p>
           </div>
+
+          {/* Round Summary Section */}
+          {roundId && (
+            <div className="rounded-xl border border-white/[0.05] bg-white/[0.02] p-4 mb-6 space-y-3">
+              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">Round Details</p>
+              <p className="text-[11px] text-slate-600">
+                These values were generated for this round and can be independently verified.
+              </p>
+              <div className="grid grid-cols-1 gap-2 text-[10px]">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-600">Round ID:</span>
+                  <span className="font-mono text-slate-400 truncate">{roundId}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-600">Server Seed:</span>
+                  <span className="font-mono text-slate-400 truncate">{formData.serverSeed.slice(0, 16)}...</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-600">Client Seed:</span>
+                  <span className="font-mono text-slate-400 truncate">{formData.clientSeed}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-600">Nonce:</span>
+                  <span className="font-mono text-slate-400">{formData.nonce}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-600">Drop Column:</span>
+                  <span className="font-mono text-slate-400">{formData.dropColumn} / 12</span>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
