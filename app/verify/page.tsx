@@ -22,9 +22,17 @@ interface VerificationResponse {
   path: number[];
 }
 
+interface OriginalRoundData {
+  roundId: string;
+  serverSeed: string;
+  clientSeed: string;
+  nonce: string;
+  dropColumn: number;
+}
+
 function VerifyContent() {
   const searchParams = useSearchParams();
-  
+
   const [formData, setFormData] = useState({
     serverSeed: "",
     clientSeed: "",
@@ -33,6 +41,8 @@ function VerifyContent() {
   });
 
   const [roundId, setRoundId] = useState<string | null>(null);
+  const [originalRound, setOriginalRound] = useState<OriginalRoundData | null>(null);
+  const [originalLoading, setOriginalLoading] = useState(false);
 
   // Auto-fill form from query parameters
   useEffect(() => {
@@ -55,6 +65,38 @@ function VerifyContent() {
       setRoundId(roundIdParam);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!roundId) {
+      return;
+    }
+
+    setOriginalLoading(true);
+    setError(null);
+    setOriginalRound(null);
+
+    fetch(`/api/verify?roundId=${encodeURIComponent(roundId)}`)
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || "Unable to load round data");
+        }
+
+        setOriginalRound(data);
+        setFormData({
+          serverSeed: data.serverSeed,
+          clientSeed: data.clientSeed,
+          nonce: data.nonce,
+          dropColumn: data.dropColumn,
+        });
+      })
+      .catch((err) => {
+        setError(err instanceof Error ? err.message : "Unable to load round data");
+      })
+      .finally(() => {
+        setOriginalLoading(false);
+      });
+  }, [roundId]);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,11 +126,35 @@ function VerifyContent() {
     setResponse(null);
     setSubmitted(false);
 
+    if (originalRound) {
+      if (formData.clientSeed !== originalRound.clientSeed) {
+        setError("Client Seed Mismatch");
+        setLoading(false);
+        return;
+      }
+      if (formData.nonce !== originalRound.nonce) {
+        setError("Nonce Mismatch");
+        setLoading(false);
+        return;
+      }
+      if (formData.serverSeed !== originalRound.serverSeed) {
+        setError("Server Seed Mismatch");
+        setLoading(false);
+        return;
+      }
+      if (Number(formData.dropColumn) !== originalRound.dropColumn) {
+        setError("Drop Column Mismatch");
+        setLoading(false);
+        return;
+      }
+    }
+
     try {
       const res = await fetch("/api/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          roundId,
           serverSeed: formData.serverSeed,
           clientSeed: formData.clientSeed,
           nonce: formData.nonce,
