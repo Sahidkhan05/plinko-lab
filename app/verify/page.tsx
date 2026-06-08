@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -22,7 +22,7 @@ interface VerificationResponse {
   path: number[];
 }
 
-export default function VerifyPage() {
+function VerifyContent() {
   const searchParams = useSearchParams();
   
   const [formData, setFormData] = useState({
@@ -424,3 +424,13 @@ export default function VerifyPage() {
     </div>
   );
 }
+
+function VerifyPageWrapper() {
+  return (
+    <Suspense fallback={null}>
+      <VerifyContent />
+    </Suspense>
+  );
+}
+
+export default VerifyPageWrapper;
